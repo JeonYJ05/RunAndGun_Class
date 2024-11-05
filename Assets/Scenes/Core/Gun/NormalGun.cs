@@ -4,13 +4,17 @@ namespace Core.Gun
 {
     public class NormalGun : GunBase
     {
-        private float _normalDelay = 0.5f;
+      
 
-        public override void Attack(float delay)
+        private void Start()
         {
-            delay = _normalDelay;
-
-            base.Attack(delay);  
+            _fireTime = 0.5f;
         }
+        public override void Attack()
+        {
+          base.Attack();
+        }
+
+        
     }
 }

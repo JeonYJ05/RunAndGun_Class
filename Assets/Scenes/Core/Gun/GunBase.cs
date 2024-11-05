@@ -7,8 +7,9 @@ namespace Core.Gun
     {
         [SerializeField] GameObject _bulletPrefab;
         [SerializeField] GameObject _firePoint;
+        [SerializeField] float _nextFireTime = 2f;
+        protected float _fireTime = 1f;
 
-        private float _lastFireTime;
 
 
         private void FixedUpdate()
@@ -16,27 +17,26 @@ namespace Core.Gun
             transform.position = _firePoint.transform.position;
             transform.rotation = _firePoint.transform.rotation;
 
-            Attack(0.5f);
+            Attack();
         }
-        protected void FireBullet()
+        public void FireBullet()
         {
-            if(_bulletPrefab != null && _firePoint != null)
+            if(_bulletPrefab != null && _firePoint != null && Time.time >= _nextFireTime)
             {
-                var Bulletinstance = Instantiate(_bulletPrefab, _firePoint.transform.position, _firePoint.transform.rotation);
-                Bullet bullet = Bulletinstance.GetComponent<Bullet>();
+                _nextFireTime = Time.time + _fireTime;
+                var bulletinstance = Instantiate(_bulletPrefab, _firePoint.transform.position, _firePoint.transform.rotation);
+                Bullet bullet = bulletinstance.GetComponent<Bullet>();
                 if (bullet != null)
                 {
                     bullet.Create(3, 10);
                 }
             }
         }
-
-        public virtual void Attack(float Delay)
+        public virtual void Attack()
         {
-            if(Input.GetKey(KeyCode.Space) && Time.time >= _lastFireTime + Delay)
+            if(Input.GetKey(KeyCode.Space))
             {
                 FireBullet();
-                _lastFireTime = Time.time;
             }
         }
     }

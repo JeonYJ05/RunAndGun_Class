@@ -6,6 +6,7 @@ namespace Core.Bullets
     {
         [SerializeField] protected Rigidbody2D _bulletRigidBody;
         private int _damage;
+        private Vector3 direction;
 
         private void Awake()
         {
@@ -22,6 +23,17 @@ namespace Core.Bullets
             DestroyBullet(5);
         }
 
+        public void SpeicalCreate(int damage , int speed)
+        {
+            _damage = damage;
+            _bulletRigidBody.AddForce(direction , ForceMode2D.Impulse);
+            DestroyBullet(5);   
+        }
+        public void SetDirection(Vector3 dir)
+        {
+            direction = dir.normalized;
+        }
+
         private void DestroyBullet(float time)
         {
             Destroy(gameObject , time);
@@ -29,9 +41,8 @@ namespace Core.Bullets
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(other.TryGetComponent<Enemy>(out Enemy enemy))
+            if(other.TryGetComponent<Monster>(out Monster enemy))
             {
-                Debug.Log("맞았다");
                 enemy.TakeDamage(5);
                 Destroy(gameObject);
             }
@@ -39,7 +50,6 @@ namespace Core.Bullets
             if(other.gameObject.layer == LayerMask.NameToLayer("ColliderTile"))
             {
                 Destroy(gameObject);
-                Debug.Log("벽");
             }
 
         }
