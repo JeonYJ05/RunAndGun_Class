@@ -1,6 +1,7 @@
 using Core.Pawns;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Core.Pawns.Player
@@ -13,6 +14,7 @@ namespace Core.Pawns.Player
         [SerializeField] private float _rollDuration = 0.3f;
 
         private Rigidbody2D _rb;
+        private Item _item;
         private float _rollCoolTime = 0.0f;
         private bool isRolling = false;
         private int _money;
@@ -23,6 +25,11 @@ namespace Core.Pawns.Player
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();  
+            _item = FindObjectOfType<Item>();
+            if(_item == null )
+            {
+                Debug.Log("찾을수없음");
+            }
         }
 
         private void Update()
@@ -77,6 +84,15 @@ namespace Core.Pawns.Player
             _money += value;
             Debug.Log($"현재 코인 : {_money}");
         }
-        
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if(other.CompareTag("Item"))
+            {
+                _item.PickupItem(other.gameObject.name);
+                Destroy(other.gameObject);
+            }
+        }
+
     }
 }

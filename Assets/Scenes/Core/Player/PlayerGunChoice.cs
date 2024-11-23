@@ -9,6 +9,8 @@ namespace Core.Pawns.Player
         private Transform _firePoint;
 
         [SerializeField] GameObject _normalGun;
+        [SerializeField] GameObject _shotGun;
+        [SerializeField] GameObject _muchineGun;
 
         private GameObject _currentGun;
 
@@ -46,6 +48,18 @@ namespace Core.Pawns.Player
         public void NormalGunChoice()
         {
             _gunPrefab = _normalGun;
+            SpawnGun();
+        }
+
+        public void ShotGunChoice()
+        {
+            _gunPrefab = _shotGun;
+            SpawnGun();
+        }
+
+        public void MuchineGunChoice()
+        {
+            _gunPrefab = _muchineGun;
             SpawnGun();
         }
 

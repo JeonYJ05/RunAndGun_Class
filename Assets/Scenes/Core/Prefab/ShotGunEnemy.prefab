@@ -275,6 +275,8 @@ MonoBehaviour:
   _coinPrefab: {fileID: 7250788790651611786, guid: 1483aa3e56ba54644803f3b24db67e29, type: 3}
   _coinDropCount: 1
   _coinValue: 2
+  _potionPrefab: {fileID: 7250788790651611786, guid: ab2d49c2d93fe914582194446b13b218, type: 3}
+  _potionDropCount: 1
   _moveSpeed: 3
   CurrentHealth: 20
   _spreadAngle: 15

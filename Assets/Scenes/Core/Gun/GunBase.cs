@@ -5,25 +5,22 @@ namespace Core.Gun
 {
     public class GunBase : MonoBehaviour
     {
-        [SerializeField] GameObject _bulletPrefab;
-        [SerializeField] GameObject _firePoint;
-        [SerializeField] float _nextFireTime = 2f;
+        public GameObject _bulletPrefab;
+        public GameObject _firePoint;
         protected float _fireTime = 1f;
-
-
 
         private void FixedUpdate()
         {
-            transform.position = _firePoint.transform.position;
-            transform.rotation = _firePoint.transform.rotation;
-
-            Attack();
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Attack();
+            }
         }
         public void FireBullet()
         {
-            if(_bulletPrefab != null && _firePoint != null && Time.time >= _nextFireTime)
+            if(_bulletPrefab != null && _firePoint != null) //&& Time.time >= _nextFireTime)
             {
-                _nextFireTime = Time.time + _fireTime;
+                //_nextFireTime = Time.time + _fireTime;
                 var bulletinstance = Instantiate(_bulletPrefab, _firePoint.transform.position, _firePoint.transform.rotation);
                 Bullet bullet = bulletinstance.GetComponent<Bullet>();
                 if (bullet != null)
@@ -34,10 +31,7 @@ namespace Core.Gun
         }
         public virtual void Attack()
         {
-            if(Input.GetKey(KeyCode.Space))
-            {
-                FireBullet();
-            }
+            FireBullet();
         }
     }
 }

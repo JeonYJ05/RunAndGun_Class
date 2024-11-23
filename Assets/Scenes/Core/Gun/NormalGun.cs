@@ -4,7 +4,7 @@ namespace Core.Gun
 {
     public class NormalGun : GunBase
     {
-      
+        [SerializeField] float _nextFireTime = 1f; 
 
         private void Start()
         {
@@ -12,7 +12,11 @@ namespace Core.Gun
         }
         public override void Attack()
         {
-          base.Attack();
+            if (Time.time >= _nextFireTime)
+            {
+                _nextFireTime = Time.time + _fireTime;
+                base.Attack();
+            }
         }
 
         

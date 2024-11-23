@@ -26,7 +26,8 @@ namespace Core.Bullets
         public void SpeicalCreate(int damage , int speed)
         {
             _damage = damage;
-            _bulletRigidBody.AddForce(direction , ForceMode2D.Impulse);
+            var dir = direction * speed;
+            _bulletRigidBody.AddForce(dir , ForceMode2D.Impulse);
             DestroyBullet(5);   
         }
         public void SetDirection(Vector3 dir)

@@ -21,6 +21,10 @@ public class Monster : MonoBehaviour
     [SerializeField] int _coinDropCount = 1;
     [SerializeField] int _coinValue = 1;
 
+    [Header("Item")]
+    [SerializeField] GameObject _potionPrefab;
+    [SerializeField] int _potionDropCount = 1;
+
     [Header("Chase Player")]
     [SerializeField] float _moveSpeed;
     private Transform _player;
@@ -117,6 +121,7 @@ public class Monster : MonoBehaviour
         isDeath = true;
         {
             CoinDrop();
+            PotionDrop();
             DestroyEnemy();
         }
         Debug.Log("»ç¸Á");
@@ -137,6 +142,20 @@ public class Monster : MonoBehaviour
             {
                 coin.SetCoinValue(_coinValue);
             }
+        }
+    }
+
+    public void PotionDrop()
+    {
+        for (int i = 0; i < _potionDropCount; ++i)
+        {
+            Vector3 spawnPosition = transform.position + new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), UnityEngine.Random.Range(-1.0f, 1.0f), 0);
+            GameObject potionInstance = Instantiate(_potionPrefab, spawnPosition, Quaternion.identity);
+            Potion potion = potionInstance.GetComponent<Potion>();
+            //if (potion != null)
+            //{
+            //    potion.SetPotionValue(_potionValue);
+            //}
         }
     }
 }
