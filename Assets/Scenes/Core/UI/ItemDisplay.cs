@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+
 public class ItemDisplay : MonoBehaviour
 {
     [SerializeField] private Image[] _slots; // 슬롯 이미지 배열

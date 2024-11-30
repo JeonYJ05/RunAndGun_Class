@@ -5,9 +5,9 @@ namespace Core.UI
 {
     public class GunChoiceUI : MonoBehaviour
     {
-        [SerializeField] Tilemap _tileMap;
-        [SerializeField] GameObject _uiPanel;
-        [SerializeField] Tile _targetTile;
+        [SerializeField] private Tilemap _tileMap;
+        [SerializeField] private GameObject _uiPanel;
+        [SerializeField] private Tile _targetTile;
 
         private bool isUi = false;
 

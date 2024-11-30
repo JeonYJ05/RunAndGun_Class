@@ -10,7 +10,7 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] protected Transform _firePoint;
     [SerializeField] protected GameObject _bulletPrefab;
-    [SerializeField] float _nextFireTime;
+    [SerializeField] protected float _nextFireTime;
     private Rigidbody2D _rb;
     private bool isDeath;
     

@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class ShotGunMonster : Monster
 {
-
     [SerializeField] float _spreadAngle = 15f; // 샷건의 발사 각도
     [SerializeField] int _bulletCount = 3; // 발사할 총알 수
     [SerializeField] float _coolTime = 2f;
-    [SerializeField] float _nextFireTime;
     [SerializeField] float _bulletSpeed = 10.0f;
     private void Start()
     {

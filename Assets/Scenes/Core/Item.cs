@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public int Count;
-    [SerializeField] Sprite _potionSprite; 
-    [SerializeField] Sprite _shotGunSprite;
-    [SerializeField] ItemData[] _slots = new ItemData[8]; 
-    
-
     // 아이템 데이터를 관리하는 클래스
     [System.Serializable]
     public class ItemData
@@ -17,8 +11,11 @@ public class Item : MonoBehaviour
         public Sprite Sprite; // 아이템 이미지
     }
 
+    [SerializeField] private Sprite _potionSprite;
+    [SerializeField] private Sprite _shotGunSprite;
+    [SerializeField] ItemData[] _slots = new ItemData[8];
     private Dictionary<string, ItemData> _inventory = new Dictionary<string, ItemData>();
-
+    public int Count;
 
     private void Start()
     {
