@@ -4,30 +4,38 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public int Count;
-
-
-    [SerializeField] private Sprite _potionSprite; // 포션 이미지
-    [SerializeField] private Sprite _shotGunSprite; // 샷건 이미지
+    [SerializeField] Sprite _potionSprite; 
+    [SerializeField] Sprite _shotGunSprite;
+    [SerializeField] ItemData[] _slots = new ItemData[8]; 
+    
 
     // 아이템 데이터를 관리하는 클래스
     [System.Serializable]
     public class ItemData
     {
-        public int Count; // 아이템 수량
+        public int Count; 
         public Sprite Sprite; // 아이템 이미지
     }
 
-
     private Dictionary<string, ItemData> _inventory = new Dictionary<string, ItemData>();
+
 
     private void Start()
     {
-        // 초기 인벤토리 세팅
-        _inventory["Potion"] = new ItemData { Count = 0, Sprite = _potionSprite };
-        _inventory["ShotGun"] = new ItemData { Count = 0, Sprite = _shotGunSprite };
+        InitializeInventory();
     }
 
-    // 아이템 추가 메서드
+    private void InitializeInventory()
+    {
+        _inventory["Potion"] = new ItemData { Count = 0, Sprite = _potionSprite };
+        _inventory["ShotGun"] = new ItemData { Count = 0, Sprite = _shotGunSprite };
+
+        for (int i = 0; i < _slots.Length; ++i)
+        {
+            _slots[i] = new ItemData { Count = 0, Sprite = null };
+        }
+    }
+
     private void AddItem(string name)
     {
         string itemName = name.Replace("(Clone)", "").Trim();
@@ -36,10 +44,12 @@ public class Item : MonoBehaviour
         {
             itemData.Count++;
             Debug.Log($"아이템갯수추가 :+ {itemName} {itemData.Count} ");
+            UpdateSlots(itemName);
+
+           
         }
         else
         {
-            // 새 아이템 추가 시 스프라이트를 올바르게 설정
             Sprite itemSprite = null;
 
             // 아이템 이름에 따라 스프라이트 설정
@@ -53,12 +63,31 @@ public class Item : MonoBehaviour
                 // 새 아이템을 추가
                 _inventory[itemName] = new ItemData { Count = 1, Sprite = itemSprite }; // 이미지 설정
                 Debug.Log($"아이템 추가: + {itemName} {1} ");
+                UpdateSlots(itemName);
+                
             }
             else
             {
                 Debug.Log($"아이템 '{itemName}'에 대한 스프라이트가 설정되어 있지 않습니다.");
             }
         }
+    }
+
+    private void UpdateSlots(string itemName)
+    {
+        // 아이템의 스프라이트와 수량을 슬롯에 추가
+        for (int i = 0; i < _slots.Length; ++i)
+        {
+            if (_slots[i].Count == 0) 
+            {
+                _slots[i] = _inventory[itemName];
+                FindObjectOfType<ItemDisplay>()?.AddItemToSlot(_slots[i]);
+                //_slots[i].Sprite = _inventory[itemName].Sprite;
+                break; 
+            }
+        }
+
+        FindObjectOfType<ItemDisplay>()?.UpdateUI(_slots);
     }
 
     // 아이템 사용 메서드
@@ -79,7 +108,7 @@ public class Item : MonoBehaviour
     {
 
         AddItem(name);
-        FindObjectOfType<ItemDisplay>()?.UpdateUI();
+        //FindObjectOfType<ItemDisplay>()?.UpdateUI(_slots);
     }
 
     public Dictionary<string, ItemData> GetInventory() => _inventory;
